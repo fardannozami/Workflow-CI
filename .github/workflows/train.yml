@@ -12,8 +12,8 @@ jobs:
       - name: Set up job
         run: echo "Starting CI pipeline for Heart Disease Model"
 
-      - name: Run actions/checkout@v3
-        uses: actions/checkout@v3
+      - name: Run actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Set up Python 3.12.7
         uses: actions/setup-python@v5
@@ -32,8 +32,8 @@ jobs:
 
       - name: Run mlflow project
         run: |
-          mlflow run MLProject --no-conda
+          cd MLProject && python modelling.py heart_preprocessing
 
       - name: Get latest MLflow run_id
         run: |
-          python -c "import mlflow; client=mlflow.tracking.MlflowClient(); exp=client.get_experiment_by_name('Heart_Disease_CI'); runs=client.search_runs(exp.experiment_id, order_by=['start_time DESC'], max_results=1) if exp else []; print(f'Run ID: {runs[0].info.run_id}') if runs else print('No runs found')"
+          ls MLProject/mlruns/1/ 2>/dev/null | grep -v models | head -1
