@@ -8,9 +8,6 @@ on:
 jobs:
   train:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Workflow-CI
     steps:
       - name: Set up job
         run: echo "Starting CI pipeline for Heart Disease Model"
