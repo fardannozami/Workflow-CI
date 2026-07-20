@@ -8,6 +8,9 @@ on:
 jobs:
   train:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Workflow-CI
     steps:
       - name: Set up job
         run: echo "Starting CI pipeline for Heart Disease Model"
@@ -32,10 +35,8 @@ jobs:
 
       - name: Run mlflow project
         run: |
-          cd Workflow-CI
-          mlflow run MLProject -P data_dir=MLProject/heart_preprocessing
+          mlflow run MLProject --no-conda
 
       - name: Get latest MLflow run_id
         run: |
-          cd Workflow-CI
           python -c "import mlflow; client=mlflow.tracking.MlflowClient(); exp=client.get_experiment_by_name('Heart_Disease_CI'); runs=client.search_runs(exp.experiment_id, order_by=['start_time DESC'], max_results=1) if exp else []; print(f'Run ID: {runs[0].info.run_id}') if runs else print('No runs found')"
