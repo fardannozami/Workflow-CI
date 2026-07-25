@@ -33,7 +33,8 @@ print(f"X_train: {X_train.shape}")
 print(f"X_test:  {X_test.shape}")
 
 # ===== MLflow =====
-mlflow.set_experiment("Heart_Disease_CI")
+if "MLFLOW_RUN_ID" not in os.environ:
+    mlflow.set_experiment("Heart_Disease_CI")
 
 with mlflow.start_run(run_name="CI_Training"):
     mlflow.sklearn.autolog()

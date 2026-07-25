@@ -32,7 +32,7 @@ jobs:
 
       - name: Run mlflow project
         run: |
-          cd MLProject && mlflow run . --env-manager=local
+          cd MLProject && mlflow run . --experiment-name Heart_Disease_CI --env-manager=local
 
       - name: Get latest MLflow run_id
         run: |
