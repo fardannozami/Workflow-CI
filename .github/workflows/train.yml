@@ -32,8 +32,9 @@ jobs:
 
       - name: Run mlflow project
         run: |
-          cd MLProject && python modelling.py heart_preprocessing
+          cd MLProject && mlflow run . --env-manager=local
 
       - name: Get latest MLflow run_id
         run: |
-          ls MLProject/mlruns/1/ 2>/dev/null | grep -v models | head -1
+          ls MLProject/mlruns/1/ 2>/dev/null || ls mlruns/1/ 2>/dev/null | grep -v models | head -1
+
